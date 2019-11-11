@@ -3,6 +3,7 @@ from .models import s3objects
 from social_django.models import UserSocialAuth
 from django.contrib.auth.models import User
 import boto3
+import json
 
 
 # Create your views here.
@@ -42,7 +43,7 @@ def upload_file(request):
                 response = client.invoke(
                     FunctionName='imageColorizingFunc',
                     LogType='None',
-                    Payload=data,
+                    Payload=json.dumps(data).encode('utf-8')
                 )
                 new_s3object.new_url = response['new_url']
                 form.save()
@@ -65,7 +66,7 @@ def update_file(request, id):
             response = client.invoke(
                 FunctionName='imageColorizingFunc',
                 LogType='None',
-                Payload=data,
+                Payload=json.dumps(data).encode('utf-8')
             )
             new_s3object.new_url = response['new_url']
             form.save()
