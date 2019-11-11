@@ -45,7 +45,9 @@ def upload_file(request):
                     LogType='None',
                     Payload=json.dumps(data).encode('utf-8')
                 )
-                new_s3object.new_url = response['new_url']
+                enc_pl = response['Payload'].read()
+                dec_pl = json.loads(enc_pl.decode('utf-8'))
+                new_s3object.new_url = dec_pl['new_url']
                 form.save()
                 return HttpResponseRedirect('/')
         else:
@@ -68,7 +70,9 @@ def update_file(request, id):
                 LogType='None',
                 Payload=json.dumps(data).encode('utf-8')
             )
-            new_s3object.new_url = response['new_url']
+            enc_pl = response['Payload'].read()
+            dec_pl = json.loads(enc_pl.decode('utf-8'))
+            new_s3object.new_url = dec_pl['new_url']
             form.save()
             return HttpResponseRedirect('/')
 

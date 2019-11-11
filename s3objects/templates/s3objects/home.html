@@ -10,7 +10,8 @@
             <table>
                 <thead>
                     <tr>
-                        <th>File Name</th>
+                        <th>New File</th>
+                        <th>Old File</th>
                         <th>Uploader FN</th>
                         <th>Uploader LN</th>
                         <th>Uploaded At</th>
@@ -21,6 +22,7 @@
                 <tbody>
                     {% for oneObject in object_list %}
                         <tr>
+                            <td><a href="{{ oneObject.new_url }}" target="_blank">Colorized</a></td>
                             <td><a href="{{ oneObject.file.url }}" target="_blank">{{ oneObject.file.name }}</a></td>
                             <td>{{ oneObject.owner.first_name }}</td>
                             <td>{{ oneObject.owner.last_name }}</td>
