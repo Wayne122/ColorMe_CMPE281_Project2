@@ -39,7 +39,7 @@ def upload_file(request):
                 new_s3object.owner = request.user
                 new_s3object = form.save()
                 data = {'fileName': new_s3object.file.name, 'fileUrl': new_s3object.file.url}
-                client = boto3.client('lambda')
+                client = boto3.client('lambda', region_name='us-west-1')
                 response = client.invoke(
                     FunctionName='imageColorizingFunc',
                     LogType='None',
@@ -64,7 +64,7 @@ def update_file(request, id):
         if request.POST and form.is_valid():
             new_s3object = form.save()
             data = {'fileName': new_s3object.file.name, 'fileUrl': new_s3object.file.url}
-            client = boto3.client('lambda')
+            client = boto3.client('lambda', region_name='us-west-1')
             response = client.invoke(
                 FunctionName='imageColorizingFunc',
                 LogType='None',

@@ -20,9 +20,16 @@ def validate_file_size(value):
         return value
 
 
+def validate_file_ext(value):
+    if os.path.splitext(os.path.basename(value.name))[1] != '.pdf':
+        raise ValidationError("Please upload png, jpg files only.")
+    else:
+        return value
+
+
 class s3objects(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    file = models.FileField(upload_to=update_filename, validators=[validate_file_size])
+    file = models.FileField(upload_to=update_filename, validators=[validate_file_size, validate_file_ext])
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     new_url = models.URLField()
     uploadTime = models.DateTimeField(auto_now_add=True)
