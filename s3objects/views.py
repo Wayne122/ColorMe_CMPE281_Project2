@@ -77,6 +77,9 @@ def update_file(request, id):
             dec_pl = json.loads(enc_pl.decode('utf-8'))
             new_s3object.new_url = dec_pl['new_url']
             form.save()
+            for oneLabel in dec_pl['labels']:
+                tmplabel, _ = picLabel.objects.get_or_create(name=oneLabel)
+                new_s3object.labels.add(tmplabel)
             return HttpResponseRedirect('/')
 
         return render(request, 's3objects/upload.html', {'form': form})
