@@ -21,10 +21,14 @@ def validate_file_size(value):
 
 
 def validate_file_ext(value):
-    if os.path.splitext(os.path.basename(value.name))[1] != '.pdf':
+    if os.path.splitext(os.path.basename(value.name))[1] != '.png' and os.path.splitext(os.path.basename(value.name))[1] != '.jpg':
         raise ValidationError("Please upload png, jpg files only.")
     else:
         return value
+
+
+class picLabel(models.Model):
+    name = models.CharField(max_length=128)
 
 
 class s3objects(models.Model):
@@ -32,6 +36,7 @@ class s3objects(models.Model):
     file = models.FileField(upload_to=update_filename, validators=[validate_file_size, validate_file_ext])
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     new_url = models.URLField()
+    labels = models.ManyToManyField(picLabel)
     uploadTime = models.DateTimeField(auto_now_add=True)
     updateTime = models.DateTimeField(auto_now=True)
     description = models.CharField(max_length=512, blank=True)

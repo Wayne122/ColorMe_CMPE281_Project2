@@ -17,6 +17,7 @@
                         <th>Uploaded At</th>
                         <th>Updated At</th>
                         <th>Description</th>
+                        <th>Labels</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +30,7 @@
                             <td>{{ oneObject.uploadTime }}</td>
                             <td>{{ oneObject.updateTime }}</td>
                             <td>{{ oneObject.description }}</td>
+                            <td>{% for label in oneObject.labels.all %}{{ label.name }} {% endfor %}</td>
                             {% if user.is_authenticated and oneObject.owner == user %}
                                 <td><a href="{% url 'update_file' id=oneObject.id %}">Update</a></td>
                                 <td><a href="{% url 'delete_file' id=oneObject.id %}">Delete</a></td>

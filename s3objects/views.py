@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import s3objects
+from .models import s3objects, picLabel
 from social_django.models import UserSocialAuth
 from django.contrib.auth.models import User
 import boto3
@@ -49,6 +49,9 @@ def upload_file(request):
                 dec_pl = json.loads(enc_pl.decode('utf-8'))
                 new_s3object.new_url = dec_pl['new_url']
                 form.save()
+                for oneLabel in dec_pl['labels']:
+                    tmplabel, _ = picLabel.objects.get_or_create(name=oneLabel)
+                    new_s3object.labels.add(tmplabel)
                 return HttpResponseRedirect('/')
         else:
             form = s3objectForm()
