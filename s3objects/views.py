@@ -2,25 +2,35 @@ from django.shortcuts import render
 from .models import s3objects, picLabel
 from social_django.models import UserSocialAuth
 from django.contrib.auth.models import User
+from django import forms
+from django.http import HttpResponseRedirect
 import boto3
 import json
 
 
 # Create your views here.
+class searchForm(forms.Form):
+    label = forms.ModelChoiceField(queryset=picLabel.objects.all())
+
+
 def home(request):
     object_list = None
     if request.user.is_authenticated:
-        object_list = s3objects.objects.all()
-    return render(request, 's3objects/home.html', {'object_list': object_list})
+        if 'search' in request.POST:
+            searchf = searchForm(request.POST)
+            if searchf.is_valid():
+                object_list = s3objects.objects.filter(labels__name__exact=searchf.cleaned_data['label'])
+        else:
+            searchf = searchForm()
+            object_list = s3objects.objects.all()
+        return render(request, 's3objects/home.html', {'object_list': object_list, 'searchf': searchf})
+    else:
+        return render(request, 's3objects/home.html')
 
 
 def account(request):
     user_list = UserSocialAuth.objects.all()
     return render(request, 's3objects/account.html', {'sau': user_list})
-
-
-from django import forms
-from django.http import HttpResponseRedirect
 
 
 class s3objectForm(forms.ModelForm):
@@ -76,6 +86,7 @@ def update_file(request, id):
             enc_pl = response['Payload'].read()
             dec_pl = json.loads(enc_pl.decode('utf-8'))
             new_s3object.new_url = dec_pl['new_url']
+            new_s3object.labels.clear()
             form.save()
             for oneLabel in dec_pl['labels']:
                 tmplabel, _ = picLabel.objects.get_or_create(name=oneLabel)
