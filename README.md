@@ -8,7 +8,7 @@ Student:
 Project Introduction (What the application does, feature list) <br>
 Our project idea was that historical pictures taken before color cameras were invented have grayscale image values. To help people investigate and analyze the information of the gray-scaled images more accurately, colorizing the pictures will be necessary and useful.
 Our application implements colorizing gray-scaled photos and to detect object labels in the photos to be used to do a simple search using the label. 
-
+![Project Architecture](https://drive.google.com/uc?export=view&id=1XS-t4MzhrGwyGM34txlQt1IML_9vBoBx)
 Sample Demo Screenshots
 * Project Main Page
 ![](https://drive.google.com/uc?export=view&id=1betF4ybXFJxCu7L6t7hXTlFlBpbu8AOf)
