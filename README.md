@@ -19,10 +19,17 @@ Sample Demo Screenshots
 
 Pre-requisites Set Up
 
+AWS Services needed:
+- CodePipeline
+- S3
+- EC2 - ELB - AutoScaling
+- RDS - MySQL
+- R53
+- CloudFront
+- Lambda
+- Rekognition
 
-Here include bullet point list of resources one need to configure in their cloud account. (E.g. For AWS: S3 buckets, CloudFront etc)
-List of required software to download locally (E.g. Spring, JDK, Eclipse IDE etc. )
-Local configuration
-How to set up and run project locally?
-Here include quick steps on how to compile and run your project on local machine (whichever you used, Mac or Windows either one).
-
+In the EC2 or local machine:
+- Follow https://pypi.org/project/mysqlclient/ to install mysqlclient library for python.
+- git clone https://github.com/Wayne122/ColorMe_CMPE281_Project2.git
+- pip install -r requirements.txt
