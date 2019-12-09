@@ -33,3 +33,5 @@ In the EC2 or local machine:
 - Follow https://pypi.org/project/mysqlclient/ to install mysqlclient library for python.
 - git clone https://github.com/Wayne122/ColorMe_CMPE281_Project2.git
 - pip install -r requirements.txt
+
+Demo: https://youtu.be/eJEt0gP7uBY
